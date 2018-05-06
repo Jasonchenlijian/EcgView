@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <com.clj.ecgview.EcgView
+        android:id="@+id/ecg_view"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        app:backgroundColor="@android:color/white"
+        app:totalSize="4800"
+        app:gridColor="@android:color/holo_red_dark"
+        app:lineColor="@android:color/black"
+        app:lines="4"
+        app:littleGrid="true"
+        app:minGridNum="5"
+        app:scaleType="scaleCenter"
+        app:xGridNum="26"
+        app:yGridNum="38"
+        app:startColumn="4"
+        app:intervalColumn="6"/>
+
+</LinearLayout>

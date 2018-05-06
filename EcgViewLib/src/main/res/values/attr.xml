@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="EcgView">
+        <attr name="scaleType">
+            <enum name="normal" value="0" />
+            <enum name="scaleCenter" value="1" />
+        </attr>
+        <attr name="xGridNum" format="integer" />
+        <attr name="yGridNum" format="integer" />
+        <attr name="minGridNum" format="integer" />
+        <attr name="littleGrid" format="boolean" />
+        <attr name="backgroundColor" format="color|integer" />
+        <attr name="gridColor" format="color|integer" />
+        <attr name="littleGridColor" format="color|integer" />
+        <attr name="lineColor" format="color|integer" />
+        <attr name="totalSize" format="integer" />
+        <attr name="startColumn" format="integer" />
+        <attr name="intervalColumn" format="integer" />
+        <attr name="lines" format="integer" />
+    </declare-styleable>
+
+</resources>
