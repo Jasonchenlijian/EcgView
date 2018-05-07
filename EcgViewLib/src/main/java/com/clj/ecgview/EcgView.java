@@ -31,10 +31,10 @@ public class EcgView extends View {
     private int totalSize;
     private int startColumn;
     private int intervalColumn;
+    private float mvData;
 
     public EcgView(Context context) {
         this(context, null);
-
     }
 
     public EcgView(Context context, AttributeSet attrs) {
@@ -57,8 +57,9 @@ public class EcgView extends View {
         littleGridColor = a.getInt(R.styleable.EcgView_littleGridColor, Color.rgb(255, 180, 180));
         lineColor = a.getInt(R.styleable.EcgView_lineColor, Color.BLACK);
         totalSize = a.getInt(R.styleable.EcgView_totalSize, 4800);
-        startColumn = a.getInt(R.styleable.EcgView_startColumn, Color.BLACK);
-        intervalColumn = a.getInt(R.styleable.EcgView_intervalColumn, 4800);
+        startColumn = a.getInt(R.styleable.EcgView_startColumn, 4);
+        intervalColumn = a.getInt(R.styleable.EcgView_intervalColumn, 6);
+        mvData = a.getFloat(R.styleable.EcgView_mvData, 4.25f);
         a.recycle();
     }
 
@@ -135,15 +136,15 @@ public class EcgView extends View {
         if (littleGrid) {
             //绘制小网格（浅红色）
             mPaint.setColor(littleGridColor);
-            // 每隔littleGridPxNum个像素画一条横线
-            for (int i = 0; i < actualHeight; i += littleGridPxNum) {
-                canvas.drawLine(paddingLeft + 0, paddingTop + i,
-                        paddingLeft + actualWidth, paddingTop + i, mPaint);
-            }
             // 每隔littleGridPxNum个像素画一条竖线
             for (int i = 0; i < actualWidth; i += littleGridPxNum) {
                 canvas.drawLine(paddingLeft + i, paddingTop + 0,
                         paddingLeft + i, paddingTop + actualHeight, mPaint);
+            }
+            // 每隔littleGridPxNum个像素画一条横线
+            for (int i = 0; i < actualHeight; i += littleGridPxNum) {
+                canvas.drawLine(paddingLeft + 0, paddingTop + i,
+                        paddingLeft + actualWidth, paddingTop + i, mPaint);
             }
         }
 
@@ -185,12 +186,12 @@ public class EcgView extends View {
             // 计算第该点和横坐标和纵坐标（从下往上描点）
             float pointy = actualHeight - unitPointPxNum * i + paddingTop;   // 计算纵坐标
             float datamv = mDataList.get(i);                                 // 将测量值转化为十进制，实际的MV数再除以42.5(这属于心电图的一个标准)
-            float pointx = startColumn * largeGridPxNum - datamv * littleGridPxNum / 4.25f + paddingLeft;  // 计算横坐标
+            float pointx = startColumn * largeGridPxNum - (datamv / mvData) * littleGridPxNum + paddingLeft;  // 计算横坐标
 
             //然后计算该点相邻的后面那个点的坐标
             float pointy_next = actualHeight - unitPointPxNum * (i + 1) + paddingTop;
             float datamv_next = mDataList.get(i + 1);
-            float pointx_next = startColumn * largeGridPxNum - datamv_next * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx_next = startColumn * largeGridPxNum - (datamv_next / mvData) * littleGridPxNum + paddingLeft;
 
             // 连接这两个点
             canvas.drawLine(pointx, pointy, pointx_next, pointy_next, mPaint);
@@ -201,12 +202,12 @@ public class EcgView extends View {
             //先计算第一个点和横坐标和纵坐标
             float pointy = actualHeight - unitPointPxNum * (i - secondLineStartPosition) + paddingTop;
             float datamv = mDataList.get(i);
-            float pointx = (startColumn + intervalColumn) * largeGridPxNum - datamv * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx = (startColumn + intervalColumn) * largeGridPxNum - (datamv / mvData) * littleGridPxNum + paddingLeft;
 
             //然后计算第二个点的横坐标和纵坐标
             float pointy_next = actualHeight - unitPointPxNum * (i - secondLineStartPosition + 1) + paddingTop;
             float datamv_next = mDataList.get(i + 1);
-            float pointx_next = (startColumn + intervalColumn) * largeGridPxNum - datamv_next * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx_next = (startColumn + intervalColumn) * largeGridPxNum - (datamv_next / mvData) * littleGridPxNum + paddingLeft;
 
             //连接这两个点
             canvas.drawLine(pointx, pointy, pointx_next, pointy_next, mPaint);
@@ -217,12 +218,12 @@ public class EcgView extends View {
             //先计算第一个点和横坐标和纵坐标
             float pointy = actualHeight - unitPointPxNum * (i - thirdLineStartPosition) + paddingTop;
             float datamv = mDataList.get(i);
-            float pointx = (startColumn + intervalColumn * 2) * largeGridPxNum - datamv * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx = (startColumn + intervalColumn * 2) * largeGridPxNum - (datamv / mvData) * littleGridPxNum + paddingLeft;
 
             //然后计算第二个点的横坐标和纵坐标
             float pointy_next = actualHeight - unitPointPxNum * (i - thirdLineStartPosition + 1) + paddingTop;
             float datamv_next = mDataList.get(i + 1);
-            float pointx_next = (startColumn + intervalColumn * 2) * largeGridPxNum - datamv_next * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx_next = (startColumn + intervalColumn * 2) * largeGridPxNum - (datamv_next / mvData) * littleGridPxNum + paddingLeft;
 
             //连接这两个点
             canvas.drawLine(pointx, pointy, pointx_next, pointy_next, mPaint);
@@ -233,12 +234,12 @@ public class EcgView extends View {
             //先计算第一个点和横坐标和纵坐标
             float pointy = actualHeight - unitPointPxNum * (i - fourthLineStartPosition) + paddingTop;
             float datamv = mDataList.get(i);
-            float pointx = (startColumn + intervalColumn * 3) * largeGridPxNum - datamv * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx = (startColumn + intervalColumn * 3) * largeGridPxNum - (datamv / mvData) * littleGridPxNum + paddingLeft;
 
             //然后计算第二个点的横坐标和纵坐标
             float pointy_next = actualHeight - unitPointPxNum * (i - fourthLineStartPosition + 1) + paddingTop;
             float datamv_next = mDataList.get(i + 1);
-            float pointx_next = (startColumn + intervalColumn * 3) * largeGridPxNum - datamv_next * littleGridPxNum / 4.25f + paddingLeft;
+            float pointx_next = (startColumn + intervalColumn * 3) * largeGridPxNum - (datamv_next / mvData) * littleGridPxNum + paddingLeft;
 
             //连接这两个点
             canvas.drawLine(pointx, pointy, pointx_next, pointy_next, mPaint);

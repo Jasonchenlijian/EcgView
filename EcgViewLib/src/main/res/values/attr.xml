@@ -19,6 +19,7 @@
         <attr name="startColumn" format="integer" />
         <attr name="intervalColumn" format="integer" />
         <attr name="lines" format="integer" />
+        <attr name="mvData" format="float" />
     </declare-styleable>
 
 </resources>

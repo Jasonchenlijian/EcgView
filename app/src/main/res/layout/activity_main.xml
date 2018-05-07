@@ -10,16 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="360dp"
         app:backgroundColor="@android:color/white"
-        app:totalSize="4800"
         app:gridColor="@android:color/holo_red_dark"
+        app:intervalColumn="6"
         app:lineColor="@android:color/black"
         app:lines="4"
         app:littleGrid="true"
         app:minGridNum="5"
+        app:mvData="4.25f"
         app:scaleType="scaleCenter"
-        app:xGridNum="26"
-        app:yGridNum="38"
         app:startColumn="4"
-        app:intervalColumn="6"/>
+        app:totalSize="4800"
+        app:xGridNum="26"
+        app:yGridNum="38" />
 
 </LinearLayout>
