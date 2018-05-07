@@ -3,22 +3,34 @@
 
 
     <declare-styleable name="EcgView">
+        <!--显示模式，左上角还是居中-->
         <attr name="scaleType">
             <enum name="normal" value="0" />
             <enum name="scaleCenter" value="1" />
         </attr>
+        <!--X轴大网格个数-->
         <attr name="xGridNum" format="integer" />
+        <!--Y轴大网格个数-->
         <attr name="yGridNum" format="integer" />
+        <!--每个大网格中的小网格个数-->
         <attr name="minGridNum" format="integer" />
+        <!--是否绘制小网格-->
         <attr name="littleGrid" format="boolean" />
+        <!--背景颜色-->
         <attr name="backgroundColor" format="color|integer" />
+        <!--大网格颜色-->
         <attr name="gridColor" format="color|integer" />
+        <!--小网格颜色-->
         <attr name="littleGridColor" format="color|integer" />
+        <!--心电线的颜色-->
         <attr name="lineColor" format="color|integer" />
+        <!--心电数据总数-->
         <attr name="totalSize" format="integer" />
+        <!--最左边线间隔大网格数-->
         <attr name="startColumn" format="integer" />
+        <!--每两条线之间间隔大网格数-->
         <attr name="intervalColumn" format="integer" />
-        <attr name="lines" format="integer" />
+        <!--每个小网格达标的心电值-->
         <attr name="mvData" format="float" />
     </declare-styleable>
 
